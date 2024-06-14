@@ -1,0 +1,2 @@
+# MTK_device_test
+MTK_android_Test_apk
