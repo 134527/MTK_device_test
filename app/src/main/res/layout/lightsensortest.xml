@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent">
+  
+  <RelativeLayout android:layout_height="match_parent" android:layout_width="wrap_content" android:id="@+id/relativeLayout1">
+ <TextView 
+   android:text="@string/LightsensorTest" 
+   android:id="@+id/txtTitle"
+   android:textSize= "30dip"
+   android:gravity="center"
+   android:layout_centerHorizontal="true"
+   android:layout_width="fill_parent"
+   android:layout_height="wrap_content"/>   
+ 
+    
+       
+<!-- for Light   --> 
+<TextView
+	android:id="@+id/Light"
+	android:layout_below="@id/txtTitle"
+	android:textSize= "25dip"
+    android:layout_width="fill_parent" 
+    android:layout_height="wrap_content" 
+    android:text="@string/Light"
+    />
+
+    <TextView
+        android:id="@+id/txt_sensor_info"
+        android:textSize= "20dip"
+        android:layout_below="@+id/Light"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"/>
+   
+    <TextView
+        android:id="@+id/txt_sensor_event"
+        android:textSize="20dip"
+        android:layout_marginTop="30dp"
+        android:layout_below="@id/txt_sensor_info"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"/>
+      
+    <include layout="@layout/control_buttons" android:id="@+id/level_buttons"/>
+    
+    </RelativeLayout>
+  
+  
+  
+</LinearLayout>
