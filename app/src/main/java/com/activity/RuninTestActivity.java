@@ -3,6 +3,7 @@ package com.activity;
 import static android.view.WindowManager.LayoutParams.FLAG_FULLSCREEN;
 import static android.view.WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.KeyguardManager;
@@ -35,10 +36,11 @@ import android.widget.TextView;
 import android.widget.VideoView;
 
 import com.DeviceTest.DeviceTest;
+import com.DeviceTest.R;
 import com.DeviceTest.helper.ControlButtonUtil;
 //import com.DeviceTest.helper.SystemUtil;
 import com.DeviceTest.helper.TestCase.RESULT;
-import com.example.mtk_device_test.R;
+
 
 import java.io.File;
 
@@ -102,14 +104,15 @@ public class RuninTestActivity extends Activity {
 	AlarmManager alarmManager;
 	PendingIntent pendingIntent;
 	BroadcastReceiver receiver;
-	
+
 	public RuninTestActivity() {
 		mTestResult = new RESULT[] { RESULT.UNDEF, RESULT.UNDEF, RESULT.UNDEF,
-				RESULT.UNDEF, }; 
+				RESULT.UNDEF, };
 		mTextViews = new TextView[mTestResult.length];
 	}
- 
-	protected void onCreate(Bundle paramBundle) {
+
+	@SuppressLint("InvalidWakeLockTag")
+    protected void onCreate(Bundle paramBundle) {
 		super.onCreate(paramBundle);
 
 		setTitle(getTitle() + "----("
@@ -207,7 +210,7 @@ public class RuninTestActivity extends Activity {
 				memSizeSpinner.setEnabled(false);
 			}
 		});
-		
+
 		stopVideo.setOnClickListener(new View.OnClickListener() {
 
 			public void onClick(View v) {
@@ -236,7 +239,7 @@ public class RuninTestActivity extends Activity {
 
 		alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
 		pendingIntent = PendingIntent.getBroadcast(this, 0, new Intent(ACTION),
-				PendingIntent.FLAG_CANCEL_CURRENT);
+				PendingIntent.FLAG_CANCEL_CURRENT | PendingIntent.FLAG_IMMUTABLE);
 
 		receiver = new BroadcastReceiver() {
 			boolean sleep = false;
@@ -251,7 +254,7 @@ public class RuninTestActivity extends Activity {
 					if (wakeLock.isHeld()) {
 						wakeLock.release();
 					}
-					powerManager.goToSleep(SystemClock.uptimeMillis());
+//					powerManager.goToSleep(SystemClock.uptimeMillis());
 				} else {
 					// wake up
 
@@ -356,9 +359,9 @@ public class RuninTestActivity extends Activity {
 	}
 
 	private void doBatteryTempTest() {
-		String temp = SystemUtil.execScriptCmd("cat " + BATTERY_TEMP_PATH,
-				DeviceTest.TEMP_FILE_PATH, true);
-
+/*		String temp = SystemUtil.execScriptCmd("cat " + BATTERY_TEMP_PATH,
+				DeviceTest.TEMP_FILE_PATH, true);*/
+		String temp = null;
 		batteryTemp = Integer.parseInt(temp);
 		batteryTemp /= 10;
 		mHandler.sendMessage(mHandler.obtainMessage(
@@ -471,8 +474,8 @@ public class RuninTestActivity extends Activity {
 					return;
 				}
 				try {
-					result = SystemUtil.execRootCmd(DeviceTest.MEMTESTER_PATH + " "
-							+ memSize + "M 1");
+					/*result = SystemUtil.execRootCmd(DeviceTest.MEMTESTER_PATH + " "
+							+ memSize + "M 1");*/
 					mHandler.post(new Runnable() {
 
 						public void run() {
@@ -544,9 +547,8 @@ public class RuninTestActivity extends Activity {
 	// }
 
 	private void stopMemTest() {
-		SystemUtil.killProcessByPath(DeviceTest.MEMTESTER_PATH);
+//		SystemUtil.killProcessByPath(DeviceTest.MEMTESTER_PATH);
 	}
-
 	protected void onStop() {
 		super.onStop();
 		stopTest();
@@ -555,7 +557,7 @@ public class RuninTestActivity extends Activity {
 	}
 
 	public String getResult() {
-		
+
 		String result = DeviceTest.RESULT_INFO_HEAD_JUST_INFO;
 		result += DeviceTest.formatResult("SleepWakeTest", mTestResult[0],
 				DeviceTest.RESULT_INFO_HEAD + sleepWakeCount) + "\n";
@@ -566,10 +568,10 @@ public class RuninTestActivity extends Activity {
 				+ "\n";
 		result += DeviceTest.formatResult("BatteryTemp", mTestResult[3],
 				DeviceTest.RESULT_INFO_HEAD + batteryTemp + "C") + "\n";
-		
+
 		return result;
 	}
-	
+
 	private void saveResult() {
 		ControlButtonUtil.setResult(getResult());
 	}

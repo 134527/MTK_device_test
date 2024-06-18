@@ -30,7 +30,7 @@ import com.DeviceTest.view.MyGridView;
 import com.DeviceTest.view.MyItemView;
 import com.activity.GpsTestActivity;
 import com.activity.RuninTestActivity;
-import com.example.mtk_device_test.R;
+
 
 import android.view.LayoutInflater;
 import android.view.ViewParent;

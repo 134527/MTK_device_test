@@ -8,7 +8,7 @@ import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.view.View;
 
-import com.example.mtk_device_test.R;
+import com.DeviceTest.R;
 
 
 public class CompassView extends View {

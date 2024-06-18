@@ -8,8 +8,9 @@ import android.widget.Button;
 
 import com.DeviceTest.DeviceTest;
 
+import com.DeviceTest.R;
 import com.DeviceTest.helper.TestCase.RESULT;
-import com.example.mtk_device_test.R;
+
 
 public class ControlButtonUtil {
 	static Activity mActivity;

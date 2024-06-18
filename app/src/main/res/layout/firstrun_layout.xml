@@ -11,7 +11,7 @@
         android:orientation="horizontal">
         <TextView 
             android:id="@+id/product_name"
-            android:textColor="@android:color/white"
+            android:textColor="@android:color/black"
             android:paddingLeft="20dip"
             android:gravity="center_vertical"
             android:layout_width="0dip"
@@ -19,7 +19,7 @@
             android:layout_height="fill_parent"/>
         <TextView 
             android:id="@+id/product_version"
-            android:textColor="@android:color/white"
+            android:textColor="@android:color/black"
             android:paddingLeft="20dip"
             android:gravity="center_vertical"
             android:maxLines="1"
@@ -36,7 +36,7 @@
         android:layout_weight="1">
         <TextView 
             android:id="@+id/nand_storage"
-            android:textColor="@android:color/white"
+            android:textColor="@android:color/black"
             android:paddingLeft="20dip"
             android:gravity="center_vertical"
             android:layout_width="0dip"
@@ -44,7 +44,7 @@
             android:layout_height="fill_parent"/>
         <TextView 
             android:id="@+id/available_nand_storage"
-            android:textColor="@android:color/white"
+            android:textColor="@android:color/black"
             android:paddingLeft="20dip"
             android:gravity="center_vertical"
             android:layout_width="0dip"
@@ -63,7 +63,7 @@
             android:layout_width="0dip"
             android:layout_weight="1"
             android:layout_height="fill_parent"
-            android:textColor="@android:color/white"
+            android:textColor="@android:color/black"
         	android:paddingLeft="20dip"
         	android:paddingTop="20dip"
             android:textSize="22sp"
@@ -74,7 +74,7 @@
             android:layout_width="0dip"
             android:layout_weight="1"
             android:layout_height="fill_parent"
-            android:textColor="@android:color/white"
+            android:textColor="@android:color/black"
         	android:paddingLeft="20dip"
         	android:paddingTop="20dip"
             android:textSize="22sp"
@@ -85,7 +85,7 @@
             android:layout_width="0dip"
             android:layout_weight="1"
             android:layout_height="fill_parent"
-            android:textColor="@android:color/white"
+            android:textColor="@android:color/black"
         	android:paddingLeft="20dip"
         	android:paddingTop="20dip"
             android:textSize="22sp"
@@ -105,31 +105,31 @@
             android:layout_weight="1"
             android:layout_height="fill_parent">   
 			<TextView 
-                android:textColor="@android:color/white"
+                android:textColor="@android:color/black"
                 android:textSize="22sp" android:layout_width="fill_parent"
 				android:layout_height="wrap_content" android:layout_centerInParent="true"
 				android:gravity="left" android:paddingTop="10sp"
 				android:visibility="visible" android:id="@+id/chargeStatusText" />
 			<TextView 
-                android:textColor="@android:color/white"
+                android:textColor="@android:color/black"
                 android:textSize="22sp" android:layout_width="fill_parent"
 				android:layout_height="wrap_content" android:layout_centerInParent="true"
 				android:gravity="left" android:paddingTop="10sp"
 				android:visibility="visible" android:id="@+id/voltageText" />
 			<TextView 
-                android:textColor="@android:color/white"
+                android:textColor="@android:color/black"
                 android:textSize="22sp" android:layout_width="fill_parent"
 				android:layout_height="wrap_content" android:layout_centerInParent="true"
 				android:gravity="left" android:paddingTop="10sp"
 				android:visibility="visible" android:id="@+id/currentText" />
 			<TextView 
-                android:textColor="@android:color/white"
+                android:textColor="@android:color/black"
                 android:textSize="22sp" android:layout_width="fill_parent"
 				android:layout_height="wrap_content" android:layout_centerInParent="true"
 				android:gravity="left" android:paddingTop="10sp"
 				android:visibility="visible" android:id="@+id/capacityText" />
 			<TextView 
-                android:textColor="@android:color/white"
+                android:textColor="@android:color/black"
                 android:textSize="22sp" android:layout_width="fill_parent"
 				android:layout_height="wrap_content" android:layout_centerInParent="true"
 				android:gravity="left" android:paddingTop="10sp"
@@ -146,7 +146,7 @@
 			    android:layout_height="fill_parent"/>
             <TextView 
                 android:id="@+id/gsensortext"
-                android:textColor="@android:color/white"
+                android:textColor="@android:color/black"
                 android:textSize="22sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>        
@@ -265,7 +265,7 @@
 		            android:orientation="vertical">
 		            <TextView 
 		                android:text="@string/KeyboardTestTitle"
-		                android:textColor="@android:color/white"
+		                android:textColor="@android:color/black"
 		                android:textSize="18sp"
 		                android:layout_width="fill_parent"
 		                android:layout_height="wrap_content"

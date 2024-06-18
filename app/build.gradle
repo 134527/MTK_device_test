@@ -3,7 +3,7 @@ plugins {
 }
 
 android {
-    namespace 'com.example.mtk_device_test'
+    namespace 'com.DeviceTest'
     compileSdk 34
 
     defaultConfig {

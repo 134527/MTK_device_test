@@ -3,9 +3,11 @@ package com.activity;
 import static android.view.WindowManager.LayoutParams.FLAG_FULLSCREEN;
 import static android.view.WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON;
 
+import android.Manifest;
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.location.Criteria;
 import android.location.GpsSatellite;
 import android.location.GpsStatus;
@@ -21,9 +23,12 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.widget.TextView;
 
+import androidx.core.app.ActivityCompat;
+
 import com.DeviceTest.DeviceTest;
+import com.DeviceTest.R;
 import com.DeviceTest.helper.ControlButtonUtil;
-import com.DeviceTest.helper.SystemUtil;
+//import com.DeviceTest.helper.SystemUtil;
 import com.DeviceTest.helper.TestCase.RESULT;
 
 import java.util.HashMap;
@@ -61,17 +66,17 @@ public class GpsTestActivity extends Activity {
 			String ttffText = "Wait for TTFF";
 			int count = time % 3;
 			switch (count) {
-			case 0:
-				ttffText += ".";
-				break;
-			case 1:
-				ttffText += "..";
-				break;
-			case 2:
-				ttffText += "...";
-				break;
-			default:
-				break;
+				case 0:
+					ttffText += ".";
+					break;
+				case 1:
+					ttffText += "..";
+					break;
+				case 2:
+					ttffText += "...";
+					break;
+				default:
+					break;
 			}
 			if (!ttffPass) {
 				ttffView.setText(ttffText);
@@ -102,6 +107,16 @@ public class GpsTestActivity extends Activity {
 
 		WifiManager wifiManager = (WifiManager) getSystemService(WIFI_SERVICE);
 		wifiManager.setWifiEnabled(false);
+		if (ActivityCompat.checkSelfPermission(this, Manifest.permission.BLUETOOTH_CONNECT) != PackageManager.PERMISSION_GRANTED) {
+			// TODO: Consider calling
+			//    ActivityCompat#requestPermissions
+			// here to request the missing permissions, and then overriding
+			//   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+			//                                          int[] grantResults)
+			// to handle the case where the user grants the permission. See the documentation
+			// for ActivityCompat#requestPermissions for more details.
+			return;
+		}
 		BluetoothAdapter.getDefaultAdapter().disable();
 		try {
 			Settings.Secure.setLocationProviderEnabled(getContentResolver(),
@@ -110,18 +125,18 @@ public class GpsTestActivity extends Activity {
 			// TODO: handle exception
 		}
 		Criteria criteria = new Criteria();
-        criteria.setAccuracy(Criteria.ACCURACY_FINE); // 高精度
-        criteria.setAltitudeRequired(false);
-        criteria.setBearingRequired(false);
-        criteria.setCostAllowed(true);
-        criteria.setPowerRequirement(Criteria.POWER_LOW); // 低功耗
+		criteria.setAccuracy(Criteria.ACCURACY_FINE); // 高精度
+		criteria.setAltitudeRequired(false);
+		criteria.setBearingRequired(false);
+		criteria.setCostAllowed(true);
+		criteria.setPowerRequirement(Criteria.POWER_LOW); // 低功耗
 
-        String provider = mLocatManager.getBestProvider(criteria, true); // 获取GPS信息
-        Location location = mLocatManager.getLastKnownLocation(provider); // 通过GPS获取位置
-        updateToNewLocation(location);
-        // 设置监听器，自动更新的最小时间为间隔N秒(1秒为1*1000，这样写主要为了方便)或最小位移变化超过N米
-        mLocatManager.requestLocationUpdates(provider, 100 * 1000, 500,
-                locationListener);    
+		String provider = mLocatManager.getBestProvider(criteria, true); // 获取GPS信息
+		Location location = mLocatManager.getLastKnownLocation(provider); // 通过GPS获取位置
+		updateToNewLocation(location);
+		// 设置监听器，自动更新的最小时间为间隔N秒(1秒为1*1000，这样写主要为了方便)或最小位移变化超过N米
+		mLocatManager.requestLocationUpdates(provider, 100 * 1000, 500,
+				locationListener);
 		mLocatManager.addGpsStatusListener(this.statusListener);
 		//mLocatManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,
 		//		1000, 0, locationListener);
@@ -137,7 +152,7 @@ public class GpsTestActivity extends Activity {
 		mHandler.postDelayed(new Runnable() {
 
 			public void run() {
-				SystemUtil.execRootCmd(DeviceTest.GPS_COLD_START_PATH);
+//				SystemUtil.execRootCmd(DeviceTest.GPS_COLD_START_PATH);
 
 				mHandler.postDelayed(new Runnable() {
 					public void run() {
@@ -160,19 +175,21 @@ public class GpsTestActivity extends Activity {
 		}, 2000);
 
 	}
-private void updateToNewLocation(Location location) {
 
-    //TextView tv1;
-   // tv1 = (TextView) this.findViewById(R.id.tv1);
-    if (location != null) {
-        double  latitude = location.getLatitude();
-        double longitude= location.getLongitude();
-        Log.e("----------","维度：" +  latitude+ "\n经度" + longitude);
-    } else {
-        Log.e("----------","无法获取地理信息");
-    }
+	private void updateToNewLocation(Location location) {
 
-}
+		//TextView tv1;
+		// tv1 = (TextView) this.findViewById(R.id.tv1);
+		if (location != null) {
+			double latitude = location.getLatitude();
+			double longitude = location.getLongitude();
+			Log.e("----------", "维度：" + latitude + "\n经度" + longitude);
+		} else {
+			Log.e("----------", "无法获取地理信息");
+		}
+
+	}
+
 	LocationListener locationListener = new LocationListener() {
 
 		public void onStatusChanged(String provider, int status, Bundle extras) {
@@ -204,6 +221,16 @@ private void updateToNewLocation(Location location) {
 
 		public void onGpsStatusChanged(int event) {
 			if (stop) {
+				return;
+			}
+			if (ActivityCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+				// TODO: Consider calling
+				//    ActivityCompat#requestPermissions
+				// here to request the missing permissions, and then overriding
+				//   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+				//                                          int[] grantResults)
+				// to handle the case where the user grants the permission. See the documentation
+				// for ActivityCompat#requestPermissions for more details.
 				return;
 			}
 			gpsStatus = mLocatManager.getGpsStatus(null);

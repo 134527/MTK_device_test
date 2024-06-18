@@ -1,3 +1,4 @@
+/*
 package com.activity;
 
 import android.os.Bundle;
@@ -23,4 +24,4 @@ public class MainActivity extends AppCompatActivity {
             return insets;
         });
     }
-}
+}*/

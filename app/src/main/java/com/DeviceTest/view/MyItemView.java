@@ -14,8 +14,9 @@ import android.view.MotionEvent;
 import android.view.WindowManager;
 import android.widget.TextView;
 
+import com.DeviceTest.R;
 import com.DeviceTest.helper.TestCase.RESULT;
-import com.example.mtk_device_test.R;
+
 
 public class MyItemView extends androidx.appcompat.widget.AppCompatTextView {
 	private static final String TAG = "MyItemView";

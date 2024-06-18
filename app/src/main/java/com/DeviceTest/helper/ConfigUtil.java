@@ -14,8 +14,9 @@ public class ConfigUtil {
         String platform = SystemProperties.get("ro.board.platform");
         if ("rk356x".equals(platform)) {
             if (TextUtils.isEmpty(mProductModel)) {
-                mProductModel = SystemUtil.execShellCmd(
-                        "cat /sys/firmware/devicetree/base/model");
+//                mProductModel = SystemUtil.execShellCmd(
+//                        "cat /sys/firmware/devicetree/base/model");
+                mProductModel = "EVB";
             }
             if (null != mProductModel) {
                 return mProductModel.contains("EVB");

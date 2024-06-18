@@ -52,7 +52,7 @@ import com.DeviceTest.helper.VUMeter;
 import com.DeviceTest.view.GsensorBall;
 import com.DeviceTest.view.KeyTestView;
 import com.DeviceTest.view.TestView;
-import com.example.mtk_device_test.R;
+
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -269,7 +269,7 @@ public class FirstRun extends Activity implements SurfaceHolder.Callback {
 	@Override
 	protected void onResume() {
 		super.onResume();
-		updateMemoryStatus(flash_path);
+//		updateMemoryStatus(flash_path);
 		kl.disableKeyguard();
 //        addWindow();
 		IntentFilter localIntentFilter = new IntentFilter();
@@ -536,15 +536,26 @@ public class FirstRun extends Activity implements SurfaceHolder.Callback {
 			}
 
 		}
-	}    
-
+	}
+	private String getVolumeState(String path) {
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+			for (StorageVolume volume : mStorageManager.getStorageVolumes()) {
+				if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+					if (volume.getDirectory().getPath().equals(path)) {
+						return volume.getState();
+					}
+				}
+			}
+		}
+		return Environment.MEDIA_UNKNOWN;
+	}
 	/******************************************************************
 	 * about SDcard
 	 */
     private static final String TEST_STRING = "Rockchip UsbHostTest File";
     public boolean testSdcard() {
         try {
-            String externalVolumeState = mStorageManager.getVolumeState(sdcard_path);
+            String externalVolumeState = getVolumeState(sdcard_path);
 
             Log.d(TAG, " __________----------- testSdcard(),    externalVolumeState = " + externalVolumeState);
             if (!externalVolumeState.equals(Environment.MEDIA_MOUNTED)) {
@@ -624,7 +635,7 @@ public class FirstRun extends Activity implements SurfaceHolder.Callback {
 	 */
     public boolean testUSBHost() {
         try {
-            String externalVolumeState = mStorageManager.getVolumeState(usb_path).toString();
+            String externalVolumeState = getVolumeState(usb_path).toString();
 
             Log.d(TAG, " __________----------- testUSBHost(),    externalVolumeState = " + externalVolumeState);
             if (!externalVolumeState.equals(Environment.MEDIA_MOUNTED) && !externalVolumeState.equals(Environment.MEDIA_MOUNTED_READ_ONLY)) {
@@ -816,8 +827,9 @@ public class FirstRun extends Activity implements SurfaceHolder.Callback {
 			Log.e("Jeffy", "plugged:" + plugged);
 			int current = -1;
 			try {
-				String currentStr = SystemUtil.execScriptCmd("cat "
-						+ CURRENT_PATH, DeviceTest.TEMP_FILE_PATH, true);
+//				String currentStr = SystemUtil.execScriptCmd("cat "
+//						+ CURRENT_PATH, DeviceTest.TEMP_FILE_PATH, true);
+				String currentStr = "";
 				if (currentStr.length() > 0) {
 					current = Integer.parseInt(currentStr);
 				}
